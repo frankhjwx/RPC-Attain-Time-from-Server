@@ -1,23 +1,23 @@
 package main
 
-    import (
-        "fmt"
-        "net/http"
-        "net/rpc"
+	import (
+		"fmt"
+		"net/http"
+		"net/rpc"
 		"time"
 		"bufio" 
 		"io"
 		"os"
 		"log"
-    )
+	)
 
 	type Args struct {
 		A string
 	}
 	
-    type Arith int
+	type Arith int
 	
-    func (t *Arith) GetTime(args *Args, reply *time.Time) error {  // main function of attaining time from server
+	func (t *Arith) GetTime(args *Args, reply *time.Time) error {  // main function of attaining time from server
 		log.Printf("Received request from %s\n",args.A)
 		if (!checkIpAuthorized(args.A)) {
 			log.Printf("Sorry, this client hasn't been authorized!\n(If you want to authorize this server, please add this IP address to \"authorized.txt\")\n\n")
@@ -25,8 +25,8 @@ package main
 			log.Printf("This is an authorized client.\n\n")
 			*reply = time.Now()
 		}
-        return nil
-    }
+		return nil
+	}
 	
 	func checkIpAuthorized(ip string) (bool) {  //  1: authorized 0: unauthorized
 		var filename = "authorized.txt"
@@ -39,8 +39,8 @@ package main
 			f, err = os.Create(filename)
 		}
 		if err != nil {
-            fmt.Println(err.Error())
-        }
+			fmt.Println(err.Error())
+		}
 		
 		buf := bufio.NewReader(f)
 		for {
@@ -65,17 +65,17 @@ package main
 		return exist;
 	}	
 
-    func main() {
+	func main() {
 
-        arith := new(Arith)
-        rpc.Register(arith)
-        rpc.HandleHTTP()
+		arith := new(Arith)
+		rpc.Register(arith)
+		rpc.HandleHTTP()
 
 		log.Println("The server has been started!\n")
-        err := http.ListenAndServe(":1919", nil)
+		err := http.ListenAndServe(":1919", nil)
 		
-        if err != nil {
-            fmt.Println(err.Error())
-        }
+		if err != nil {
+			fmt.Println(err.Error())
+		}
 		
-    }
+	}
