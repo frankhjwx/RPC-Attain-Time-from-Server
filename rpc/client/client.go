@@ -1,29 +1,29 @@
 package main
 
-    import (
-        "fmt"
-        "log"
+	import (
+		"fmt"
+		"log"
 		"net"
-        "net/rpc"
-        "os"
+		"net/rpc"
+		"os"
 		"time"
-    )
+	)
 	
 	type Args struct {
 		A string
 	}
 
-    func main() {
-        if len(os.Args) != 2 {
-            fmt.Println("Usage: ", os.Args[0], "server")
-            os.Exit(1)
-        }
-        serverAddress := os.Args[1]
+	func main() {
+		if len(os.Args) != 2 {
+			fmt.Println("Usage: ", os.Args[0], "server")
+			os.Exit(1)
+		}
+		serverAddress := os.Args[1]
 
-        client, err := rpc.DialHTTP("tcp", serverAddress+":1919")
-        if err != nil {
-            log.Fatal("dialing:", err)
-        }
+		client, err := rpc.DialHTTP("tcp", serverAddress+":1919")
+		if err != nil {
+			log.Fatal("dialing:", err)
+		}
 		
 		addrs, err := net.InterfaceAddrs()
 
@@ -62,6 +62,5 @@ package main
 		} else {
 			fmt.Printf("The server rejected the quest.\n")
 		}
-        
 
-    }
+	}
